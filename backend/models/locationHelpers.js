@@ -15,3 +15,8 @@ export async function getPath(id) {
     }
     return path;
 }
+
+// Get all locations at a specific level
+export async function getByLevel(level) {
+    return Location.find({ level }).sort('name');
+}
