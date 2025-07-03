@@ -25,3 +25,13 @@ export const getLocation = async (req, res, next) => {
         next(e);
     }
 };
+
+// Get direct children of a location
+export const getLocationChildren = async (req, res, next) => {
+    try {
+        const children = await getChildren(req.params.id);
+        res.json(children);
+    } catch (e) {
+        next(e);
+    }
+};
