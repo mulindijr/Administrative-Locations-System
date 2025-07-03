@@ -20,3 +20,15 @@ export async function getPath(id) {
 export async function getByLevel(level) {
     return Location.find({ level }).sort('name');
 }
+
+// Count all children, grandchildren, etc.
+export async function countDescendants(parentId) {
+    let cnt = 0;
+    async function go(id) {
+        const kids = await Location.find({ parent: id }, '_id');
+        cnt += kids.length;
+        for (let k of kids) await go(k._id);
+    }
+    await go(parentId);
+    return cnt;
+}
