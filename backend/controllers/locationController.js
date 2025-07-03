@@ -85,3 +85,20 @@ export const updateLocation = async (req, res, next) => {
         next(e);
     }
 };
+
+// Delete a location (only if it has no descendants)
+export const deleteLocation = async (req, res, next) => {
+    try {
+        const descendantCount = await countDescendants(req.params.id);
+        if (descendantCount > 0) {
+            return res.status(400).json({ error: `${descendantCount} descendant(s) exist` });
+        }
+
+        const deleted = await Location.findByIdAndDelete(req.params.id);
+        if (!deleted) return res.status(404).json({ error: 'Location not found' });
+
+        res.json({ message: 'Location deleted successfully' });
+    } catch (e) {
+        next(e);
+    }
+};
