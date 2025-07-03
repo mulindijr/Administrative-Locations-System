@@ -70,3 +70,18 @@ export const createLocation = async (req, res, next) => {
         next(e);
     }
 };
+
+// Update an existing location
+export const updateLocation = async (req, res, next) => {
+    try {
+        const loc = await Location.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true, runValidators: true }
+        );
+        if (!loc) return res.status(404).json({ error: 'Location not found' });
+        res.json(loc);
+    } catch (e) {
+        next(e);
+    }
+};
