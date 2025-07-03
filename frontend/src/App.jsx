@@ -1,9 +1,18 @@
-const App = () => {
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/HomePage';
+import Layout from './components/Layout';
+
+function App() {
   return (
-    <div>
-      <h1>Welcome to the Admin Locations System</h1>
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="*" element={<div>Page Not Found</div>} />
+        </Route>
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
