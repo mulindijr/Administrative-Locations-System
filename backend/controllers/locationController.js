@@ -49,3 +49,13 @@ export const getLocationsByLevel = async (req, res, next) => {
         next(e);
     }
 };
+
+// Get breadcrumb path from root to location
+export const getLocationPath = async (req, res, next) => {
+    try {
+        const path = await getPath(req.params.id);
+        res.json(path);
+    } catch (e) {
+        next(e);
+    }
+};
