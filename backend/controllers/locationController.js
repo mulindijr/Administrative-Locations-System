@@ -102,3 +102,18 @@ export const deleteLocation = async (req, res, next) => {
         next(e);
     }
 };
+
+// Get counts of countries, states, cities, and districts
+export const getLocationStats = async (req, res, next) => {
+    try {
+        const [countries, states, cities, districts] = await Promise.all([
+            Location.countDocuments({ level: 0 }),
+            Location.countDocuments({ level: 1 }),
+            Location.countDocuments({ level: 2 }),
+            Location.countDocuments({ level: 3 })
+        ]);
+        res.json({ countries, states, cities, districts });
+    } catch (e) {
+        next(e);
+    }
+};

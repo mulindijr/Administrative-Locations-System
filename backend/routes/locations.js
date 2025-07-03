@@ -4,6 +4,7 @@ import preventCircular from '../middleware/preventCircular.js';
 
 const router = express.Router();
 
+router.get('/stats', C.getLocationStats);
 router.get('/', C.getLocations);
 router.get('/level/:level', C.getLocationsByLevel);
 router.get('/:id/children', C.getLocationChildren);
