@@ -35,3 +35,17 @@ export const getLocationChildren = async (req, res, next) => {
         next(e);
     }
 };
+
+// Get all locations by level
+export const getLocationsByLevel = async (req, res, next) => {
+    try {
+        const level = +req.params.level;
+        if (![0, 1, 2, 3].includes(level)) {
+            return res.status(400).json({ error: 'Invalid level' });
+        }
+        const locations = await getByLevel(level);
+        res.json(locations);
+    } catch (e) {
+        next(e);
+    }
+};
