@@ -4,3 +4,14 @@ import Location from './Location.js';
 export async function getChildren(parentId) {
     return Location.find({ parent: parentId }).sort('name');
 }
+
+//Get full path from root to this location
+export async function getPath(id) {
+    const path = [];
+    let cur = await Location.findById(id);
+    while (cur) {
+        path.unshift({ id: cur._id, name: cur.name, level: cur.level });
+        cur = cur.parent ? await Location.findById(cur.parent) : null;
+    }
+    return path;
+}
