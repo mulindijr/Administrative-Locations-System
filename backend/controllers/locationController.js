@@ -59,3 +59,14 @@ export const getLocationPath = async (req, res, next) => {
         next(e);
     }
 };
+
+// Create a new location
+export const createLocation = async (req, res, next) => {
+    try {
+        const loc = new Location(req.body);
+        await loc.save();
+        res.status(201).json(loc);
+    } catch (e) {
+        next(e);
+    }
+};
