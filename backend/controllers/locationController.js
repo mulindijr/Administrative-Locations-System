@@ -14,3 +14,14 @@ export const getLocations = async (req, res, next) => {
         next(e);
     }
 };
+
+// Get a single location by ID
+export const getLocation = async (req, res, next) => {
+    try {
+        const loc = await Location.findById(req.params.id);
+        if (!loc) return res.status(404).json({ error: 'Location not found' });
+        res.json(loc);
+    } catch (e) {
+        next(e);
+    }
+};
